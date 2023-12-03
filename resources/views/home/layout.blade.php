@@ -31,12 +31,18 @@
                     </li>
                     <li class="nav-item">
                         @auth
+                        <a class="nav-link" href="{{ route('orders.index', Auth::user()->id) }}">My Orders</a>
+                        @endauth
+                    </li>
+                    <li class="nav-item">
+                        @auth
                         <a class="nav-link" href="{{ route('cart.index', Auth::user()->cart->id) }}">
                         Cart[@if(Auth::user()->cart->products->count() > 0)
                         <span id="cart_num">{{Auth::user()->cart->products->count()}}</span>
                         @endif]</a>
                         @endauth
                     </li>
+                    
                 </ul>
                 
                 @if (Route::has('login'))

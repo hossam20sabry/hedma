@@ -30,25 +30,36 @@
     <table class="table table-success table-striped">
         <thead>
             <tr>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Product</td>
-                <td>Quantity</td>
-                <td>Payment</td>
-                <td>Delivery</td>
-                <td>Notification</td>
+                <td class="text-center">Name</td>
+                <td class="text-center">Email</td>
+                <td class="text-center">Product</td>
+                <td class="text-center">Quantity</td>
+                <td class="text-center">Payment</td>
+                <td class="text-center">Delivery</td>
+                <td >Notification</td>
             </tr>
         </thead>
         <tbody>
             @foreach ($orders as $order)
                 <tr>
-                    <td>{{$order->user->name}}</td>
-                    <td>{{$order->user->email}}</td>
-                    <td>{{$order->product->name}}</td>
-                    <td>{{$order->quantity}}</td>
-                    <td>{{$order->payment_status}}</td>
-                    <td>{{$order->delivery_status}}</td>
-                    <td><a href="" class="btn btn-primary">Send Email</a></td>
+                    <td class="text-center">{{$order->user->name}}</td>
+                    <td class="text-center">{{$order->user->email}}</td>
+                    <td class="text-center">{{$order->product->name}}</td>
+                    <td class="text-center">{{$order->quantity}}</td>
+                    <td class="text-center">{{$order->payment_status}}</td>
+                    @if ($order->delivery_status != 'pending')
+                        <td class="text-center">Delivered</td>
+                    @else
+                    <td class="display-center">
+                        <form action="{{ route('admin.orders.delivered') }}" method="post">
+                            @csrf
+                            @method('put')
+                            <input type="hidden" value="{{$order->id}}" name="order_id">
+                            <button class="btn btn-primary">Delivered</button>
+                        </form>
+                    </td>
+                    @endif
+                    <td><a href="" class="btn btn-success">Send Email</a></td>
                 </tr>
             @endforeach
         </tbody>

@@ -5,6 +5,7 @@ use App\Http\Controllers\home\HomeController;
 use App\Http\Controllers\home\CartController;
 use App\Http\Controllers\home\PaymentController;
 use App\Http\Controllers\home\ProductController;
+use App\Http\Controllers\home\OrdersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/', [HomeController::class, 'index'])->middleware(['verified'])->name('home.index');
 
 
 
@@ -27,7 +28,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
 
     Route::prefix('/products')->name('product.')->group(function () {
         Route::get('/', [ProductController::class,'index'])->name('index');
@@ -43,6 +44,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/{cart_id}', [CartController::class, 'index'])->name('index');
         Route::post('/destroy_product', [CartController::class, 'destroy_product'])->name('destroy_product');
         Route::post('/add', [CartController::class, 'cart_add'])->name('add');
+    });
+
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/{id}', [OrdersController::class, 'orders'])->name('index');
+        Route::post('/store', [OrdersController::class, 'store'])->name('store');
+        Route::delete('/destroy/{id}', [OrdersController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('stripe')->name('stripe.')->group(function(){

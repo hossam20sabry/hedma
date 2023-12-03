@@ -71,6 +71,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::prefix('orders')->name('orders.')->group(function () {
             Route::get('/', [OrdersController::class,'index'])->name('index');
             Route::get('/search', [OrdersController::class,'search'])->name('search');
+            Route::put('/delivered', [OrdersController::class,'delivered'])->name('delivered');
         });
 
     });

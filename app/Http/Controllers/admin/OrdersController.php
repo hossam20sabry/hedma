@@ -21,4 +21,11 @@ class OrdersController extends Controller
         return view("admin.orders.index", compact("orders"));
     }
 
+    public function delivered(Request $request){
+        $order = Order::find($request->order_id);
+        $order->delivery_status = 1;
+        $order->update();
+        return redirect()->back();
+    }
+
 }

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index(){
-        $products = Product::orderBy("id","desc")->paginate(10);
+        $products = Product::inRandomOrder()->paginate(20);
         $categories = Category::all();
         $brands = Brand::all();
         $kinds = Kind::all();
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $total_price = $product->price - $product->price * $product->discount / 100;
         $total_price = ceil($total_price);
-        return view('home.show', compact('product', 'total_price'));
+        return view('home.products.show', compact('product', 'total_price'));
     }
 
     public function cash(Request $request){

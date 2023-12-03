@@ -10,22 +10,22 @@
                     <p>{{ Session::get('success') }}</p>
                 </div>
             @endif
-            <div class="card text-bg-light m-3 box_shadow" style="max-width: 580px;">
+            <div class="card text-bg-light m-3 box_shadow p-2" style="max-width: 580px;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="/images/{{$product->image}}" class="img-fluid rounded-start p-2 productShow_img" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title"><span class="text-bold">Title:</span> <span class="text-capitalize">{{$product->name}}</span></h5>
-                            <p class="card-text"><span class="text-bold">Description:</span> {{$product->description}}</p>
+                            <h5 class="card-title"> <span class="text-capitalize">{{$product->name}}</span></h5>
+                            <p class="card-text"> {{$product->description}}</p>
                             <p class="card-text"><span class="text-bold">Price:</span> <span class="text-decoration-line-through">${{$product->price}} </span> <span class="text-danger">&nbsp;&nbsp; ${{$total_price}}</span></p>
                             <p class="card-text"><span class="text-bold">Brand:</span> {{$product->brand->name}}</p>
                             <p class="card-text"><span class="text-bold">Category:</span> {{$product->category->name}}</p>
                         </div>
+
                         <form action="{{ route('product.cash')}}" method="POST">
                             @csrf
-                        
                             <div class="row mx-1 py-2">
                                 <div class="col-md-6 mb-2">
                                     <label for="quantity" class="text-bold">Quantity: </label>

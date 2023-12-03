@@ -137,6 +137,11 @@
     display: flex;
     justify-content: space-between;
 }
+.display-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .border{
     border-radius: 5px;
 }
