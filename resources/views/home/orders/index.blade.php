@@ -31,20 +31,31 @@
                                 <div class="col-md-6">
                                     <p class="card-text"><span class="text-bold">Quantity:</span> {{$order->quantity}}</p>
                                 </div>
+                                @if($order->delivery_status == '1')
                                 <div class="col-md-6">
-                                    <p class="card-text green float-end"><span class="text-bold">Delivery:</span> {{$order->delivery_status}}</p>
+                                    <p class="card-text green float-end"><span class="text-bold">Delivered</span></p>
                                 </div>
+                                @endif
+                                @if($order->delivery_status == 'pending')
+                                <div class="col-md-6">
+                                    <p class="card-text red float-end"><span class="text-bold">Pending</span></p>
+                                </div>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="card-text"><span class="text-bold">Total Price:</span> <span class="red">${{$order->total_price}} </span></p>
                                 </div>
                                 <div class="col-md-6">
+                                    @if($order->payment_status == 'canceled')
+                                    <p class="card-text red float-end"><span class="text-bold">Order Canceled</p>
+                                    @endif
+                                    @if($order->delivery_status == 'pending')
                                     <form action="{{ route('orders.destroy', $order->id)}}" method="post">
                                         @csrf
-                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger float-end ">Cancel Order</button>
                                     </form>
+                                    @endif
                                 </div>
                                 
                             </div>

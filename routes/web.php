@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [HomeController::class, 'index'])->middleware(['verified'])->name('home.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
 
@@ -28,7 +28,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth', 'verified')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/home', [HomeController::class, 'index'])->middleware(['verified'])->name('home.index2');
 
     Route::prefix('/products')->name('product.')->group(function () {
         Route::get('/', [ProductController::class,'index'])->name('index');
@@ -37,8 +39,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('search/', [ProductController::class, 'search'])->name('search');
         Route::get('/{product}/show', [ProductController::class, 'show'])->name('show');
         Route::post('/cash', [ProductController::class, 'cash'])->name('cash');
-        
     });
+
 
     Route::prefix('cart')->name('cart.')->group(function () {
         Route::get('/{cart_id}', [CartController::class, 'index'])->name('index');
@@ -49,7 +51,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/{id}', [OrdersController::class, 'orders'])->name('index');
         Route::post('/store', [OrdersController::class, 'store'])->name('store');
-        Route::delete('/destroy/{id}', [OrdersController::class, 'destroy'])->name('destroy');
+        Route::post('/destroy/{id}', [OrdersController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('stripe')->name('stripe.')->group(function(){

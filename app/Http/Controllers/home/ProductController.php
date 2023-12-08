@@ -9,6 +9,8 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Notifications\Hedma;
+use Notification;
 
 class ProductController extends Controller
 {
@@ -57,7 +59,7 @@ class ProductController extends Controller
 
     public function cash(Request $request){
         $request->validate([
-            'quantity' => 'required|numeric|min:1'
+            'quantity' => 'required|numeric|min:1|max:6',
         ]);
         // $check = Order::where('product_id', $request->product_id)
         //                     ->where('user_id', Auth::user()->id)->first();
@@ -65,14 +67,33 @@ class ProductController extends Controller
         $order->user_id = Auth::user()->id;
         $order->product_id = $request->product_id;
         $order->quantity = $request->quantity;
+        $order->save();
+
+        $details = [
+            'greeting' => 'Welcome to Hedma',
+            'firstline' => 'your order has been successfully placed',
+            'secondtline' => 'This is your order code: ' . $order->qr_code,
+            'button' => 'View Order',
+            'url' => route('orders.index', Auth::user()->id),
+            'lastline' => 'Thank you for shopping with us',
+        ];
+
+        $user = Auth::user();
+
+        Notification::send($user, new Hedma($details));
+
         $order->delivery_status = 'pending';
         $order->payment_status = 'cash_pending';
+        $order->qr_code = uniqid().$order->id;
         $order->total_price = $request->total_price * $request->quantity;
         $order->save();
+
         $product = Product::find($request->product_id);
         $product->times_sold = $product->times_sold + $request->quantity;
         $product->quantity = $product->quantity - $request->quantity;
         $product->save();
+
+        
         return redirect()->back()->with('success', 'Order confirmed Successfully, We will contact with you soon with more details, Thank you');
     }
 

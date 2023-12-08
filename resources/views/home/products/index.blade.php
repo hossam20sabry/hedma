@@ -4,9 +4,9 @@
 <div class="py-3 background">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="d-flex">
-                    <div class="nav-item dropdown m-2">
+                    <div class="nav-item dropdown m-1">
                         <a class="nav-link dropdown-toggle text-capitalize nav_item" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Categories
                         </a>
@@ -16,7 +16,7 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div class="nav-item dropdown m-2">
+                    <div class="nav-item dropdown m-1">
                         <a class="nav-link dropdown-toggle text-capitalize nav_item" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Brands
                         </a>
@@ -28,9 +28,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 box_shadow p-2 border">
+            <div class="col-md-4 m-1">
                 <form class="d-flex" action="{{ route('product.search') }}" method="get" role="search">
-                    
                     <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>

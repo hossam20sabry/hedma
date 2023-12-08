@@ -71,7 +71,10 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous">
+</script>
+
+
 <script>
         
     $(document).ready(function(){
@@ -94,7 +97,7 @@
                         $('#mainSpinner').addClass('d-none');
                         $('html, body').animate({
                             scrollTop: $('#Products').offset().top
-                        });
+                        }, 1000);
                     }
 
                     if(response.message == "duplicate"){
@@ -102,7 +105,7 @@
                         $('#mainSpinner').addClass('d-none');
                         $('html, body').animate({
                             scrollTop: $('#Products').offset().top
-                        });
+                        }, 1000);
                     }
                 }
             });

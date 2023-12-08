@@ -8,6 +8,10 @@
             </div>
             <h1 class="text-center p-2">Payment Successful</h1>
             <p class="text-center p-2">We will contact you soon with more details, <br> <span class="green text-bold">Thank you</span></p>
-        </div>
+            <div class="center">
+                <a href="{{route('orders.index', Auth::user()->id)}}" class="btn btn-success">My Orders</a>
+            </div>
+            </div>
+            
 </div>
 @endsection

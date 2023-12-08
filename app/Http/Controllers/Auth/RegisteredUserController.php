@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Rules\PhoneValidationRule;
 
 class RegisteredUserController extends Controller
 {
@@ -31,31 +32,36 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->all());
         
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255', new PhoneValidationRule()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 
-        $user->sendEmailVerificationNotification();
+        Cart::create([
+            'user_id' => $user->id
+        ]);
 
         event(new Registered($user));
 
-        $cart = new Cart();
-        $cart->user_id = $user->id;
-        $cart->save();
+
         
-        // $user->sendEmailVerificationNotification();
 
         Auth::login($user);
 
         return redirect('/');
+
     }
 }

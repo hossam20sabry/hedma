@@ -59,7 +59,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="submit" class="btn btn-primary submit" >Submit</button>
                                             </div>
                                         </div>
                                         </div>
@@ -71,7 +71,7 @@
                                         <input type="hidden" name="quantity2" id="quantity2" value="">
                                         <input type="hidden" name="product_id2" value="{{$product->id}}">
                                         <input type="hidden" name="total_price2" value="{{$total_price}}">
-                                        <button type="submit" class="btn btn-primary m-1">pay Now</button>
+                                        <button type="submit" class="btn btn-primary m-1 submit">pay Now</button>
                                     </form>
                                 </div>
                             </div>
@@ -84,7 +84,11 @@
     </div>
     
 </div>
-
+<div class="mainSpinner d-none" id="mainSpinner">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+    </div>
+</div>
 
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -94,13 +98,23 @@
 
 <script>
 $(document).ready(function(){
+
+    $('.submit').on('click', function(){
+        $('#exampleModal').modal('hide');
+        $('#mainSpinner').removeClass('d-none');
+    });
+
     const price = {!! json_encode($total_price) !!};
     let total_price = price;
     total_price = Math.ceil(total_price); 
     $('.total_price').text(total_price);
     $('#quantity2').val(1);
+
     $('#quantity').on('change', function(){
         let quantity = $(this).val();
+        if(quantity < 1){
+            quantity = 1;
+        }
         $('#quantity2').val(quantity);
         total_price = price * quantity;
         total_price = Math.ceil(total_price); 

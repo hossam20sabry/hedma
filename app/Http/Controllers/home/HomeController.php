@@ -15,7 +15,7 @@ use Stripe;
 class HomeController extends Controller
 {
     public function index(){
-        $products = Product::paginate(4);
+        $products = Product::inRandomOrder()->paginate(4);
         return view('home.index', compact('products'));
     }
     

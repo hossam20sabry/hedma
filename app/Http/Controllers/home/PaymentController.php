@@ -8,7 +8,8 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Stripe;
-
+use App\Notifications\Hedma;
+use Notification;
 class PaymentController extends Controller
 {
     public function show(Request $request){
@@ -25,6 +26,15 @@ class PaymentController extends Controller
     public function checkout(Request $request){
 
         $product = Product::find($request->product_id2);
+
+
+        // handling order
+        $order = new Order();
+        $order->user_id = Auth::user()->id;
+        $order->product_id = $request->product_id2;
+        $order->quantity = $request->quantity2;
+        $order->total_price = $request->total_price2 * $request->quantity2;
+        $order->save();
         
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         
@@ -32,7 +42,7 @@ class PaymentController extends Controller
 
         $response = $stripe->checkout->sessions->create([
 
-            'success_url' => $redirectUrl,
+            'success_url' => $redirectUrl . '&order_id=' . $order->id,
 
             'customer_email' => 'demo@gmail.com',
 
@@ -55,21 +65,6 @@ class PaymentController extends Controller
             'allow_promotion_codes' => true,
         ]);
 
-        // handling order
-        $order = new Order();
-        $order->user_id = Auth::user()->id;
-        $order->product_id = $request->product_id2;
-        $order->quantity = $request->quantity2;
-        $order->delivery_status = 'pending';
-        $order->payment_status = 'paid';
-        $order->total_price = $request->total_price2 * $request->quantity2;
-        $order->save();
-
-        // handling times_sold of product and quantity
-        $product->times_sold = $product->times_sold + $request->quantity2;
-        $product->quantity = $product->quantity - $request->quantity2;
-        $product->save();
-
 
         return redirect($response['url']);
     }
@@ -78,8 +73,33 @@ class PaymentController extends Controller
 
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
-        $response = $stripe->checkout->sessions->retrieve($request->session_id);
+        $order = Order::find($request->order_id);
+        $order->delivery_status = 'pending';
+        $order->payment_status = 'paid';
+        $order->qr_code = uniqid().$order->id;
+        $order->save();
 
+        // handling times_sold of product and quantity
+        $product = Product::find($order->product_id);
+        $product->times_sold = $product->times_sold + $request->quantity2;
+        $product->quantity = $product->quantity - $request->quantity2;
+        $product->save();
+
+        $details = [
+            'greeting' => 'Welcome to Hedma',
+            'firstline' => 'your order has been successfully placed',
+            'secondtline' => 'This is your order code: ' . $order->qr_code,
+            'button' => 'View Order',
+            'url' => route('orders.index', Auth::user()->id),
+            'lastline' => 'Thank you for shopping with us',
+        ];
+
+        $user = Auth::user();
+
+        Notification::send($user, new Hedma($details));
+
+        $response = $stripe->checkout->sessions->retrieve($request->session_id);
+        
         return view('home.payment_success');
     }
 }
