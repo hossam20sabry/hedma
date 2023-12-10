@@ -157,11 +157,14 @@
 }
 /* nav dropdown */
 .nav_item{
+    width: 157px;
+    overflow: hidden;
     background-color: #f7f7f7;
     border-radius: 5px;
     padding: 8px 25px;
     margin: 2px 0;
 }
+
 /* end nav dropdown */
 
 footer{
@@ -171,5 +174,10 @@ footer{
     .hh1{
         font-size: 15px;
     }
-    
+}
+
+@media only screen and (max-width: 544px) {
+    .res_none{
+        display: none;
+    }
 }

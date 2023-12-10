@@ -31,7 +31,7 @@
                                 <div class="col-md-6">
                                     <p class="card-text"><span class="text-bold">Quantity:</span> {{$order->quantity}}</p>
                                 </div>
-                                @if($order->delivery_status == '1')
+                                @if($order->delivery_status == 'delevered')
                                 <div class="col-md-6">
                                     <p class="card-text green float-end"><span class="text-bold">Delivered</span></p>
                                 </div>

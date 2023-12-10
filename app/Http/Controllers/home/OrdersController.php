@@ -10,7 +10,7 @@ class OrdersController extends Controller
 
     public function orders($id)
     {
-        $orders = Order::where('user_id', $id)->where('delivery_status', '!=', null)->get();
+        $orders = Order::where('user_id', $id)->where('delivery_status', '!=', null)->where('payment_status', '!=', 'refunded')->get();
         return view('home.orders.index', compact('orders'));
     }
 
@@ -19,6 +19,6 @@ class OrdersController extends Controller
         $order->payment_status = 'canceled';
         $order->delivery_status = 'canceled';
         $order->update();
-        return redirect()->back()->with('success', 'Order deleted successfully');
+        return redirect()->back()->with('success', 'your Request to cancel this Order in under review now, we will contact you soon');
     }
 }

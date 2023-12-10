@@ -24,19 +24,19 @@
                 @endif
             </div>
             <div class="row  my-3">
-                <div class="col-3">
+                <div class="col-sm-3 mb-2">
                     <input type="text" class="form-control" name="name" value="{{$product->name}}" placeholder="Name" aria-label="First name">
                     @error('name')
                     <p class="error_message m-1">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="col-3">
+                <div class="col-sm-3 mb-2">
                     <input type="decimal" class="form-control" name="price" value="{{$product->price}}" placeholder="Price" aria-label="Price">
                     @error('price')
                     <div class="error_message m-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 mb-2">
                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                     <select class="form-select" id="specificSizeSelect" name="category_id">
                         <option selected value="{{$product->category->id}}">{{$product->category->name}}</option>
@@ -48,7 +48,7 @@
                     <div class="error_message m-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 mb-2">
                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                     <select class="form-select" id="specificSizeSelect" name="brand_id">
                         <option selected value="{{$product->brand->id}}">{{$product->brand->name}}</option>
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="row my-3">
-                <div class="col-6">
+                <div class="col-sm-6 mb-2">
                     <div class="form-floating">
                         <textarea class="form-control" name="description" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{$product->description}}</textarea>
                         <label for="floatingTextarea2">Description</label>
@@ -71,7 +71,7 @@
                     <div class="error_message m-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6 mb-2">
                     <input type="text" class="form-control mb-3" name="discount" value="{{$product->discount}}" placeholder="discount" aria-label="discount">
                     @error('discount')
                     <p class="error_message m-1">{{ $message }}</p>
@@ -84,7 +84,7 @@
             </div>
             <div class="row center my-3">
                 
-                <div class="col-4">
+                <div class="col-sm-4 mb-2">
                     <div class="input-group">
                         <input type="file" class="form-control" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                     </div>
@@ -92,7 +92,7 @@
                     <div class="error_message m-1">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4 mb-2">
                     
                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                     <select class="form-select" id="specificSizeSelect" name="kind_id">
@@ -106,7 +106,7 @@
                     @enderror
                     
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4 mb-2">
                     <button type="submit" class="btn btn-primary w-100 px-5">Update</button>
                 </div>
             </div>

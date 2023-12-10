@@ -26,17 +26,22 @@
             <a href="{{ route('admin.kinds.index') }}" class="nav-link text-capitalize">kinds</a>
             <a href="{{ route('admin.products.index') }}" class="nav-link text-capitalize">products</a>
             <a href="{{ route('admin.orders.index') }}" class="nav-link text-capitalize">orders</a>
+            
             </ul>
             <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-capitalize" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ Auth::guard('admin')->user()->name }}
-            </a>
-            <ul class="dropdown-menu">
-                <form action="{{ route('admin.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="dropdown-item">log out</button>
-                </form>
-            </ul>
+                <a class="nav-link dropdown-toggle text-capitalize nav_item text-center box_shadow" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php
+                        $userNameParts = explode(' ', Auth::guard('admin')->user()->name, 2);
+                        $displayName = $userNameParts[0];
+                    ?>
+                    {{ $displayName }}
+                </a>
+                <ul class="dropdown-menu">
+                    <form action="{{ route('admin.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item">log out</button>
+                    </form>
+                </ul>
             </div>
         </div>
         </div>

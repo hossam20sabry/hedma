@@ -71,7 +71,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::prefix('orders')->name('orders.')->group(function () {
             Route::get('/', [OrdersController::class,'index'])->name('index');
             Route::get('/search', [OrdersController::class,'search'])->name('search');
-            Route::put('/delivered', [OrdersController::class,'delivered'])->name('delivered');
+            Route::get('/search_code', [OrdersController::class,'search_code'])->name('search_code');
+            Route::get('{id}/delivered', [OrdersController::class,'delivered'])->name('delivered');
+            Route::get('{order}/show', [OrdersController::class,'show'])->name('show');
+            Route::get('/cancelRequests', [OrdersController::class,'cancelRequests'])->name('cancelRequests');
+            Route::get('{order}/cancel', [OrdersController::class,'cancel'])->name('cancel');
         });
 
     });

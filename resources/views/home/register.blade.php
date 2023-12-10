@@ -14,6 +14,11 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <div class="col-md-12">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" name="phone" class="form-control" id="phone" value="{{ old('phone') }}" autocomplete="username">
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                </div>
+                <div class="col-md-12">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}" autocomplete="username">
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -23,11 +28,7 @@
                     <input type="address" name="address" class="form-control" id="address" value="{{old('address')}}" autocomplete="username">
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
-                <div class="col-md-12">
-                    <label for="phone" class="form-label">Phone</label>
-                    <input type="tel" name="phone" class="form-control" id="phone" value="{{ old('phone') }}" autocomplete="username">
-                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-                </div>
+                
                 <div class="col-md-12">
                     <label for="Password" class="form-label">Password</label>
                     <input type="Password" name="password" class="form-control" id="Password">
@@ -39,23 +40,32 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
                 <div class="col-12 center">
-                    <button type="submit" class="btn btn-primary px-5 w-100">Register</button>
+                    <button type="submit" id="submit" class="btn btn-primary px-5 w-100">Register</button>
                 </div>
                 <div class="col-12 center">
                     <a href="{{ route('login') }}" class="btn btn-link">Already have an account? Login</a>
                 </div>
             </form>
         </div>
+        {{-- <div class="col-10 col-md-5 box_shadow m-2 p-2" style="width: 460px; height: 480px" id="map">
+
+        </div> --}}
     </div>
     
     
 </div>
+<div class="mainSpinner d-none" id="mainSpinner">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+    </div>
+</div>
+
 <script>
-    $(document).ready(function () {
-        $('#phone').intlTelInput({
-            initialCountry: 'auto',
-            separateDialCode: true,
+    $(document).ready(function(){
+        $('#submit').on('click', function(){
+            $('#exampleModal').modal('hide');
+            $('#mainSpinner').removeClass('d-none');
         });
-    });
+    })
 </script>
 @endsection

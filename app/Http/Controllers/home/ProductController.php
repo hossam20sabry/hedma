@@ -61,8 +61,7 @@ class ProductController extends Controller
         $request->validate([
             'quantity' => 'required|numeric|min:1|max:6',
         ]);
-        // $check = Order::where('product_id', $request->product_id)
-        //                     ->where('user_id', Auth::user()->id)->first();
+        
         $order = new Order();
         $order->user_id = Auth::user()->id;
         $order->product_id = $request->product_id;

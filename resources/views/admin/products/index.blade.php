@@ -34,14 +34,14 @@
     <table class="table table-success table-striped">
         <thead>
             <tr>
-                <th scope="col">id</th>
+                <th scope="col" class="res_none">id</th>
                 <th>image</th>
                 <th scope="col">Name</th>
-                <th scope="col">price</th>
-                {{-- <th scope="col">description</th> --}}
-                <th scope="col">brand</th>
-                <th scope="col">category</th>
-                <th scope="col">kind</th>
+                <th scope="col" class="res_none">price</th>
+                <th scope="col" class="res_none">sold</th>
+                {{-- <th scope="col">brand</th> --}}
+                <th scope="col" class="res_none">category</th>
+                <th scope="col" class="res_none">kind</th>
                 <th scope="col">Update</th>
                 <th scope="col">Delete</th>
                 
@@ -50,14 +50,14 @@
         <tbody>
             @foreach ($products as $product)
             <tr>
-                    <th scope="row">{{$product->id}}</th>
+                    <th scope="row" class="res_none">{{$product->id}}</th>
                     <td><img src="/images/{{$product->image}}" class="img_table_size" alt=""></td>
                     <td class="text-capitalize">{{$product->name}}</td>
-                    <td>${{$product->price}}</td>
-                    {{-- <td>{{$product->description}}</td> --}}
-                    <td>{{$product->brand->name}}</td>
-                    <td>{{$product->category->name}}</td>
-                    <td>{{$product->kind->name}}</td>
+                    <td class="res_none">${{$product->price}}</td>
+                    <td class="res_none">{{$product->times_sold}}</td>
+                    {{-- <td>{{$product->brand->name}}</td> --}}
+                    <td class="res_none" >{{$product->category->name}}</td>
+                    <td class="res_none" >{{$product->kind->name}}</td>
                     <td><a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary">Update</a>
                     <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST">
                         @csrf

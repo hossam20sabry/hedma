@@ -49,15 +49,19 @@
                 
                 @if (Route::has('login'))
                 @auth
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-capitalize nav_item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Auth::user()->name }}
+                <div class="nav-item dropdown center">
+                    <a class="nav-link dropdown-toggle text-capitalize nav_item text-center box_shadow" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php
+                            $userNameParts = explode(' ', Auth::user()->name, 2);
+                            $displayName = $userNameParts[0];
+                        ?>
+                        {{ $displayName }}
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu ">
                         <li><a class="dropdown-item text-capitalize" href="{{ route('profile.edit') }}">Profile</a></li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <li><button type="submit" class="dropdown-item text-capitalize">Log out</button></li>
+                            <li class=""><button type="submit" class="dropdown-item text-capitalize">Log out</button></li>
                         </form>
                     </ul>
                 </div>

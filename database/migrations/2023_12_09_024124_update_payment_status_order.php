@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('user', function (Blueprint $table) {
-            //
+        Schema::table('orders', function (Blueprint $table) {
+            $table->enum('payment_status', ['pending', 'paid', 'cash_pending', 'canceled', 'refunded'])->default('pending')->change();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
         });
     }

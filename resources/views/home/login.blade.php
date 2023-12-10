@@ -21,7 +21,7 @@
                 </div>
                 
                 <div class="col-md-12 center">
-                    <button type="submit" class="btn btn-primary px-5 w-100">Log in</button>
+                    <button type="submit" id="submit" class="btn btn-primary px-5 w-100">Log in</button>
                 </div>
                 <div class="col-md-12 center">
                     <a href="{{ route('register') }}" class="btn btn-link">Don't have an account? Register</a>
@@ -30,4 +30,18 @@
         </div>
     </div>
 </div>
+<div class="mainSpinner d-none" id="mainSpinner">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#submit').on('click', function(){
+            $('#exampleModal').modal('hide');
+            $('#mainSpinner').removeClass('d-none');
+        });
+    })
+</script>
 @endsection
