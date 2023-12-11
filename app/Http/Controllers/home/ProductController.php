@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Notifications\Hedma;
-use Notification;
+use Illuminate\Support\Facades\Notification;
 
 class ProductController extends Controller
 {
@@ -67,6 +67,8 @@ class ProductController extends Controller
         $order->product_id = $request->product_id;
         $order->quantity = $request->quantity;
         $order->save();
+        $order->qr_code = uniqid() . '-' . $order->id;
+        $order->save();
 
         $details = [
             'greeting' => 'Welcome to Hedma',
@@ -83,7 +85,6 @@ class ProductController extends Controller
 
         $order->delivery_status = 'pending';
         $order->payment_status = 'cash_pending';
-        $order->qr_code = uniqid().$order->id;
         $order->total_price = $request->total_price * $request->quantity;
         $order->save();
 

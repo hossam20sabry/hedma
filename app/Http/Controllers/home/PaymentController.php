@@ -9,7 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Stripe;
 use App\Notifications\Hedma;
-use Notification;
+
+use Illuminate\Support\Facades\Notification;
 class PaymentController extends Controller
 {
     public function show(Request $request){
@@ -76,7 +77,7 @@ class PaymentController extends Controller
         $order = Order::find($request->order_id);
         $order->delivery_status = 'pending';
         $order->payment_status = 'paid';
-        $order->qr_code = uniqid().$order->id;
+        $order->qr_code = uniqid() . '-' . $order->id;
         $order->save();
 
         // handling times_sold of product and quantity
