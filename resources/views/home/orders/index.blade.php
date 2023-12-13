@@ -38,7 +38,7 @@
                                 @endif
                                 @if($order->delivery_status == 'pending')
                                 <div class="col-md-6">
-                                    <p class="card-text red float-end"><span class="text-bold">Pending</span></p>
+                                    <p class="card-text text-primary float-end"><span class="text-bold">Pending</span></p>
                                 </div>
                                 @endif
                             </div>
