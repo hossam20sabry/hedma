@@ -76,6 +76,7 @@
         </div>
     </nav>  
     @yield('index')
+    @yield('content')
     @yield('login')
     @yield('register')
     

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\AdminProfileController;
+use App\Http\Controllers\admin\AdminsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\admin\CategoriesController;
 use App\Http\Controllers\admin\BrandsController;
@@ -27,6 +29,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::middleware('admin')->group(function () {
 
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+        Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile/{guard}', [AdminProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile/{guard}', [AdminProfileController::class, 'destroy'])->name('profile.destroy');
 
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
         

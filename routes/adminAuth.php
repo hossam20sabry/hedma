@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminsController;
 use App\Http\Controllers\adminAuth\AuthenticatedSessionController;
 use App\Http\Controllers\adminAuth\ConfirmablePasswordController;
 use App\Http\Controllers\adminAuth\EmailVerificationNotificationController;
@@ -12,10 +13,8 @@ use App\Http\Controllers\adminAuth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
-
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    
+    
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
@@ -35,7 +34,19 @@ Route::middleware('guest:admin')->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('admin')->group(function () {
+
+    Route::delete('delete/{id}', [AdminsController::class, 'destroy'])->name('delete');
+
+    Route::post('main/{admin}', [AdminsController::class, 'main'])->name('main');
+
+    Route::get('admins', [AdminsController::class, 'index'])->name('admins.index');
+
+    Route::get('register', [RegisteredUserController::class, 'create'])
+                ->name('register');
+
+    Route::post('register', [RegisteredUserController::class, 'store']);
+
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 
@@ -54,5 +65,6 @@ Route::middleware('auth')->group(function () {
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     
 });

@@ -26,6 +26,8 @@
             <a href="{{ route('admin.kinds.index') }}" class="nav-link text-capitalize">kinds</a>
             <a href="{{ route('admin.products.index') }}" class="nav-link text-capitalize">products</a>
             <a href="{{ route('admin.orders.index') }}" class="nav-link text-capitalize">orders</a>
+            <a href="{{ route('admin.admins.index') }}" class="nav-link text-capitalize">Admins</a>            
+
             
             </ul>
             <div class="nav-item dropdown">
@@ -37,6 +39,7 @@
                     {{ $displayName }}
                 </a>
                 <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-capitalize" href="{{ route('admin.profile.edit') }}">profile</a></li>
                     <form action="{{ route('admin.logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">log out</button>

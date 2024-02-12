@@ -9,8 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Stripe;
 use App\Notifications\Hedma;
-
 use Illuminate\Support\Facades\Notification;
+
 class PaymentController extends Controller
 {
     public function show(Request $request){
@@ -27,7 +27,6 @@ class PaymentController extends Controller
     public function checkout(Request $request){
 
         $product = Product::find($request->product_id2);
-
 
         // handling order
         $order = new Order();
@@ -86,18 +85,18 @@ class PaymentController extends Controller
         $product->quantity = $product->quantity - $request->quantity2;
         $product->save();
 
-        $details = [
-            'greeting' => 'Welcome to Hedma',
-            'firstline' => 'your order has been successfully placed',
-            'secondtline' => 'This is your order code: ' . $order->qr_code,
-            'button' => 'View Order',
-            'url' => route('orders.index', Auth::user()->id),
-            'lastline' => 'Thank you for shopping with us',
-        ];
+        // $details = [
+        //     'greeting' => 'Welcome to Hedma',
+        //     'firstline' => 'your order has been successfully placed',
+        //     'secondtline' => 'This is your order code: ' . $order->qr_code,
+        //     'button' => 'View Order',
+        //     'url' => route('orders.index', Auth::user()->id),
+        //     'lastline' => 'Thank you for shopping with us',
+        // ];
 
         $user = Auth::user();
 
-        Notification::send($user, new Hedma($details));
+        // Notification::send($user, new Hedma($details));
 
         $response = $stripe->checkout->sessions->retrieve($request->session_id);
         
