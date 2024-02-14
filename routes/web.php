@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/{id}', [OrdersController::class, 'orders'])->name('index');
         Route::post('/store', [OrdersController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [OrdersController::class, 'show'])->name('show');
         Route::post('/destroy/{id}', [OrdersController::class, 'destroy'])->name('destroy');
     });
 

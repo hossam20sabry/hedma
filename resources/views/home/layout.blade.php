@@ -33,7 +33,7 @@
                     </li>
                     <li class="nav-item">
                         @auth
-                        <a class="nav-link" href="{{ route('orders.index', Auth::user()->id) }}">My Orders</a>
+                        <a class="nav-link" href="{{ route('orders.index', Auth::user()->id) }}">Orders</a>
                         @endauth
                     </li>
                     <li class="nav-item">

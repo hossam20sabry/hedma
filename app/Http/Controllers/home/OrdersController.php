@@ -21,4 +21,9 @@ class OrdersController extends Controller
         $order->update();
         return redirect()->back()->with('success', 'your Request to cancel this Order in under review now, we will contact you soon');
     }
+
+    public function show($id){
+        $order = Order::find($id);
+        return view('home.orders.show', compact('order'));
+    }
 }
