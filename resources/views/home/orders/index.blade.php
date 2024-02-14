@@ -12,29 +12,61 @@
     @if(count($orders) == 0)
     <h2 class="text-center">No orders yet</h2>
     @else
-    <table class="table box_shadow">
-        <thead>
-            <tr>
-                {{-- <th scope="col">id</th> --}}
-                <th>img</th>
-                <th scope="col" class="res_none">Quantity</th>
-                <th scope="col" >Total Price</th>
-                <th scope="col" class="res_none">Delivery Status</th>
-                <th scope="col">Show</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($orders as $order)
-                <tr>
-                    {{-- <td>{{$order->id}}</td> --}}
-                    <td><img src="{{'/images/'.$order->product->image}}" class="img-fluid rounded-start p-2 img-table" alt="..."></td>
-                    <td class="res_none">{{$order->quantity}}</td>
-                    <td>${{$order->total_price}}</td>
-                    <td class="res_none">{{$order->delivery_status}}</td>
-                    <td><a href="{{ route('orders.show', $order->id)}}" class="btn btn-success">Show</a></td>
-                </tr>
-            @endforeach
-    </table>
+    <div class="row">
+        @foreach($orders as $order)
+        <div class="col-md-6">
+            <div class="card text-bg-light m-3 box_shadow p-2" style="max-width: 580px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/images/{{$order->product->image}}" class="img-fluid rounded-start p-2 productShow_img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"> <span class="text-capitalize text-bold">{{$order->product->name}}</span></h5>
+                            <p class="card-text"> {{$order->product->description}}</p>
+                            <p class="card-text"><span class="text-bold">Price:</span> <span class="text-decoration-line-through">${{$order->product->price}} </span> <span class="text-danger">&nbsp;&nbsp; ${{$order->product->price - $order->product->price * $order->product->discount / 100}}</span></p>
+                            <p class="card-text"><span class="text-bold">Brand:</span> {{$order->product->brand->name}}</p>
+                            
+                            <div class="row pb-3">
+                                <div class="col-md-6">
+                                    <p class="card-text"><span class="text-bold">Quantity:</span> {{$order->quantity}}</p>
+                                </div>
+                                @if($order->delivery_status == 'delevered')
+                                <div class="col-md-6">
+                                    <p class="card-text green float-end"><span class="text-bold">Delivered</span></p>
+                                </div>
+                                @endif
+                                @if($order->delivery_status == 'pending')
+                                <div class="col-md-6">
+                                    <p class="card-text red float-end"><span class="text-bold">Pending</span></p>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="card-text"><span class="text-bold">Total Price:</span> <span class="red">${{$order->total_price}} </span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    @if($order->payment_status == 'canceled')
+                                    <p class="card-text red float-end"><span class="text-bold">Order Canceled</p>
+                                    @endif
+                                    @if($order->delivery_status == 'pending')
+                                    <form action="{{ route('orders.destroy', $order->id)}}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger float-end ">Cancel Order</button>
+                                    </form>
+                                    @endif
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        @endforeach
+    </div>
     @endif
     
     
